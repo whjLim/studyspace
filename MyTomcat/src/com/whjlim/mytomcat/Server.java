@@ -1,5 +1,6 @@
 package com.whjlim.mytomcat;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +23,7 @@ public class Server {
         ServerSocket ss = null;
         Socket socket = null;
         // 提升作用域
+        //H:\myProject\studyspace
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String ctime = null;
         try {
@@ -32,43 +34,37 @@ public class Server {
                 count++;
                 System.out.println("第" + count + "次连接");
 
-                //拿到输入，里面有相应的请求信息
+                //==============拿到输入，里面有相应的请求信息===================
                 InputStream input = socket.getInputStream();
-                byte[] buff = new byte[1024];
-                //输入流每次读出来信息放入buff
-                int len = input.read(buff);
-                if (len > 0){
-                    String msg = new String(buff,0,len);
-                    System.out.println("===" + msg + "===");
-                }else{
-                    System.out.println("null");
-                }
-                //返回信息
+                Request request = new Request(input);
+                //=========返回信息=============
                 OutputStream os = socket.getOutputStream();
-                ctime = format.format(new Date());
-                String html = "HTTP/1.1 200 OK\n";
-                html += "Content-Type: text/html;charset=utf-8\n";
-                html += "\n";
-                html += "<html><head><title>学习使我快乐</title></head><body>当前学习时间：" + ctime + "</body></html>";
-                /*html = "HTTP/1.1 200 OK\n" +
-                        "Date: Sat, 31 Dec 2005 23:59:59 GMT\n" +
-                        "Content-Type: text/html;charset=utf-8\n" +
-                        "Content-Length: 122\n" +
-                        "\n" +
-                        "＜html＞\n" +
-                        "＜head＞\n" +
-                        "＜title＞Wrox Homepage＜/title＞\n" +
-                        "＜/head＞\n" +
-                        "＜body＞\n" +
-                        "＜!-- body goes here --＞\n" +
-                        "＜/body＞\n" +
-                        "＜/html＞";*/
-                os.write(html.getBytes());
-                os.flush();
-                os.close();
+                Response response = new Response(os);
+               //==============业务逻辑================
+                String uri = request.getUri();
+                //判断是否请求静态资源.html css img js
+                if(isStatic(uri)){
+                    response.writeFile("."+uri);
+                }else{
+
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    /*
+    *
+    * */
+    public static boolean isStatic(String uri){
+        String[] suffixs = {"html","css","js","jpg","jpeg","png"};
+        boolean isStatic = false;
+        for(String suffix : suffixs){
+            if(uri.endsWith(suffix)){
+                isStatic = true;
+                break;
+            }
+        }
+        return isStatic;
     }
 }
