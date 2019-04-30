@@ -255,5 +255,50 @@ public class LeetCodeString {
         return grid[n-1][m-1];
     }
 
+    /**
+     * 62. 不同路径
+     * @param m
+     * @param n
+     * @return
+     */
+    public long uniquePaths(int m, int n) {
+        long[][] dp = new long[n][m];
+        for(int i = 0; i < m; i++){
+            dp[0][i] = 1;
+        }
+        for(int i = 0; i < n; i++){
+            dp[i][0] = 1;
+        }
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j < m; j++){
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[n-1][m-1];
+    }
+    /**
+     *565. 数组嵌套
+     * 有价值的针对改动是将经过的数组值变为-1，而不是维持一个bool数组
+     */
+    public int arrayNesting(int[] nums) {
+        int len = nums.length;
+        int res = 0;
+        for(int i = 0; i < len; i++){
+            if(nums[i] != -1){
+                int temp = nums[i];
+                nums[i] = -1;
+                int tot = 1;
+                while(nums[temp] != -1){
+                    tot+=1;
+                    nums[temp] = -1;
+                    temp = nums[temp];
+                }
+                if(tot > res)
+                    res = tot;
+            }
+        }
+        return res;
+    }
+
 
 }
