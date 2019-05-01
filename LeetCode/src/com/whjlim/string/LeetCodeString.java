@@ -299,6 +299,43 @@ public class LeetCodeString {
         }
         return res;
     }
+    /**
+     * 55. 跳跃游戏
+     */
+    public boolean canJump(int[] nums) {
+        if(null == nums)
+            return false;
+        if(nums[0] == 0){
+            if(nums.length == 1)return true;
+            else return false;
+        }
+
+        int len = nums.length;
+        int i = len-1;
+        while (i >= 0){
+            if(nums[i] == 0 && i != len-1){
+                int zeroNum = 1;
+                i--;
+                while (nums[i] == 0){
+                    i--;
+                    zeroNum++;
+                }
+                int zeroIndex = i+1;
+                while (i >= 0){
+                    if(nums[i] > (zeroIndex-i-1+zeroNum)){
+                        break;
+                    }else{
+                        i--;
+                    }
+                }
+                if(i == -1)
+                    return false;
+            }else{
+                i--;
+            }
+        }
+        return true;
+    }
 
 
 }
