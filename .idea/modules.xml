@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BaseStudy/BaseStudy.iml" filepath="$PROJECT_DIR$/BaseStudy/BaseStudy.iml" />
       <module fileurl="file://$PROJECT_DIR$/LeetCode/LeetCode.iml" filepath="$PROJECT_DIR$/LeetCode/LeetCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyTomcat/MyTomcat.iml" filepath="$PROJECT_DIR$/MyTomcat/MyTomcat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/desginpatterns/desginpatterns.iml" filepath="$PROJECT_DIR$/desginpatterns/desginpatterns.iml" />
       <module fileurl="file://$PROJECT_DIR$/springbootssm/springbootssm.iml" filepath="$PROJECT_DIR$/springbootssm/springbootssm.iml" />
     </modules>
   </component>

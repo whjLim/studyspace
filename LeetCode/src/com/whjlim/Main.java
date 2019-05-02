@@ -1,5 +1,6 @@
 package com.whjlim;
 
+import com.whjlim.array.LeetCodeArray;
 import com.whjlim.string.LeetCodeString;
 
 import java.util.Scanner;
@@ -117,6 +118,8 @@ public class Main {
 
     public static void main(String[] args){
         LeetCodeString leetCodeString = new LeetCodeString();
-        System.out.println(leetCodeString.periodOfString("byebyebye"));
+        int[] res = leetCodeString.findRedundantDirectedConnection(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}});
+        LeetCodeArray leetCodeArray = new LeetCodeArray();
+        System.out.println(leetCodeArray.maxProfit(2,new int[]{3,3,5,0,0,3,1,4}));
     }
 }
