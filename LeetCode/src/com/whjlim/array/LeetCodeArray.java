@@ -58,7 +58,7 @@ public class LeetCodeArray {
      * 两道题差不多，一起搞了应该没有问题吧？
      * 思路错误，但是写的好像也不错，其他地方应该可以用到
      */
-    public int maxProfit(int k, int[] prices) {
+    public int maxProfit_error(int k, int[] prices) {
         if(k < 1 || null == prices || prices.length == 0)return 0;
         int buy = prices[0], index = 0;
         int[] sell = new int[prices.length];
@@ -118,4 +118,80 @@ public class LeetCodeArray {
         nums[index] = nums[temp]^nums[index];
         nums[temp] = nums[temp]^nums[index];
     }
+
+    /*
+    * 123. 买卖股票的最佳时机 III
+    * */
+
+    public int maxProfit(int[] prices) {
+        if(null == prices || prices.length == 0)return 0;
+        //记录 i 位置后面的最高值
+        int[] rightMax = new int[prices.length];
+        rightMax[prices.length-1] = 0;
+        int max = prices[prices.length-1];
+        for(int i = prices.length-2; i >= 0; i--){
+            /*if(prices[i] >= max){
+                rightMax[i] = rightMax[i+1];
+                max = prices[i];
+            }else{
+                rightMax[i] = Math.max(rightMax[i+1], max - prices[i]);
+            }*/
+            rightMax[i] = Math.max(rightMax[i+1], max - prices[i]);
+            max = Math.max(max, prices[i]);
+        }
+        int min = prices[0], res = 0, ans = 0;
+        for(int i = 1, len = prices.length; i < len; i++){
+
+            res = Math.max(prices[i]-min, res);
+            min = Math.min(min, prices[i]);
+            if(i+1 < len){
+                ans = Math.max(ans, res+rightMax[i+1]);
+            }else{
+                ans = Math.max(ans, res);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 188. 买卖股票的最佳时机 IV
+     */
+    //10,0000,0000
+    public int maxProfit(int k, int[] prices) {
+        if(k < 1 || prices.length == 0)return 0;
+
+        int min = prices[0], sellNull = 0, res = 0;
+        for(int i = 1, len = prices.length; i < len; i++){
+            if(prices[i] > min){ //今天涨了
+                if(i+1 < len){
+                    if(prices[i+1] < prices[i]){
+                        res += prices[i] - min;
+                        min = prices[i+1];
+                        sellNull+=1;
+                    }
+                }else{
+                    sellNull+=1;
+                    res += prices[i] - min;
+                }
+            }else{
+                min = prices[i];
+            }
+        }
+        if(k >= sellNull) return res;
+        int[] dpbuy = new int[k];
+        for(int i = 0; i < k; i++)
+            dpbuy[i] = Integer.MIN_VALUE;
+        int[] dpsell = new int[k];
+        for(int price : prices){
+            dpbuy[0] = Math.max(dpbuy[0], -price);
+            dpsell[0] = Math.max(dpsell[0], dpbuy[0]+price);
+            for(int i = 1; i < k; i++){
+                dpbuy[i] = Math.max(dpbuy[i], dpsell[i-1] - price);
+                dpsell[i] = Math.max(dpsell[i], dpbuy[i]+price);
+            }
+        }
+
+        return dpsell[k-1];
+    }
+
 }
