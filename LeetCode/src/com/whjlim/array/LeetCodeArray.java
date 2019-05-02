@@ -193,5 +193,18 @@ public class LeetCodeArray {
 
         return dpsell[k-1];
     }
+    /**
+     * 901. 股票价格跨度
+     */
+    class StockSpanner {
+
+        public StockSpanner() {
+
+        }
+
+        public int next(int price) {
+            return -1;
+        }
+    }
 
 }
