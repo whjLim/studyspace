@@ -1,11 +1,6 @@
 package com.whjlim.string;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
-
+import java.util.*;
 
 
 public class LeetCodeString {
@@ -336,6 +331,52 @@ public class LeetCodeString {
         }
         return true;
     }
+    public String buildString(String rule){
+
+
+        //不用sb,直接连接到栈中
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
+
+        char[] ru = rule.toCharArray();
+        for(int i = 0, len = rule.length(); i < len; i++){
+            if(ru[i]>='0' && ru[i] <= '9'){
+                int period = (ru[i]-'0');
+                //计算周期个数
+                while(i+1 < len && (ru[i+1]>= '0' && ru[i+1] <= '9')){
+                    period = period*10 + (ru[i+1]-'0');
+                    i++;
+                }
+                numStack.add(period);
+            }
+            //是要重复的字符
+            else if(ru[i]!='[' && ru[i] != ']'){
+                StringBuilder temp = new StringBuilder();
+                while((ru[i]>='a' && ru[i] <= 'z') || (ru[i]>='A' && ru[i] <= 'A') ){
+                    temp.append(ru[i]);
+                    i++;
+                }
+                i--;
+                strStack.add(temp.toString());
+            }
+            //[]内字符自动重复
+            else if(ru[i]== ']'){
+                int copyNum = numStack.pop();
+                String copyStr = strStack.pop();
+                StringBuilder t = new StringBuilder(copyStr);
+                t.append(sb);
+                sb = new StringBuilder();
+                for(int j = 0; j < copyNum; j++){
+                    sb.append(t);
+                }
+            }
+
+        }
+        return sb.toString();
+
+    }
+
 
 
 

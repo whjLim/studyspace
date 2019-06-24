@@ -1,125 +1,108 @@
 package com.whjlim;
 
-import com.whjlim.array.LeetCodeArray;
+// 本题为考试单行多行输入输出规范示例，无需提交，不计分。
 import com.whjlim.string.LeetCodeString;
 
+import java.text.Format;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Vector;
 
-/**
- * 黑白矩阵，是改变奇数，还是改变偶数
- */
+class LinkTree{
+    final int MAX = 1100;
+    int[] sum = new int[MAX<<2];
+    int[] add = new int[MAX<<2];
+    int[] num = new int[MAX];
+    public void pushup(int rt){
+        sum[rt] = sum[rt<<1]+sum[rt<<1|1];
+    }
+    public void build(int l, int r, int rt){
+        if(l == r){
+            sum[rt] = num[l];
+            return;
+        }
+        int m = (l+r)>>1;
+        build(l,m,rt<<1);
+        build(m+1, r,rt<<1|1);
+        pushup(rt);
+    }
+    public void pushdown(int rt, int l, int r){
+        if(add[rt]!= 0){
+            add[rt<<1] += add[rt];
+            add[rt<<1|1] += add[rt];
+            sum[rt<<1] += add[rt]*l;
+            sum[rt<<1|1] += add[rt]*r;
+            add[rt] = 0;
+        }
+    }
+    public int query(int L, int R, int l, int r, int rt){
+        if(L <= l && r <= R){
+            return sum[rt];
+        }
+        int m = (l+r)>>1;
+        pushdown(rt,m-l+1,r-m);
+        int ans = 0;
+        if(L <= m)ans += query(L,R,l,m,rt<<1);
+        if(R >= m)ans += query(L,R,m+1,l,rt<<1|1);
+        return ans;
+    }
+    public LinkTree(int[] num){
+        this.num = num;
+        build(1,1000,1);
+    }
+}
+
 public class Main {
 
-    public static int n, m;
-    public static int fx[] = new int[]{-1,1,0,0};
-    public static int fy[] = new int[]{0,0,-1,1};
+    private static Vector<Integer> vector = new Vector<Integer>();
 
-    public static boolean isOK(int[][] nums, int x, int y){
-        boolean flag = true;
-        boolean first = false;
-        int befor = 0;
-        for(int i = 0; i < 4; i++){
-            int xi = x + fx[i];
-            int yi = y + fy[i];
-            if(xi >= n || xi < 0 || yi >= m || yi < 0)continue;
-            if(nums[x][y] == nums[xi][yi]){
-                flag =  false;
-                break;
-            }
-            if(!first){
-                first = true;
-                befor = nums[xi][yi];
-            }else if(befor != nums[xi][yi]){
-                flag = false;
-                break;
-            }
-        }
-        return flag;
-    }
+    public static void main(String[] args) {
 
-    public static boolean blackWhite(int[][] nums){
-        boolean flag = true;
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if(!isOK(nums, i, j)){
-                    flag = false;
-                    break;
-                }
-            }
-        }
-        return flag;
-    }
-    public static int solveOld(int[][] nums, int x, int y){
-        int res = 0;
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if((i+j)%2 == 0 && nums[i][j] != nums[x][y]){
-                    res += 1;
-                }
-            }
-        }
-        return res;
-    }
-    public static int solveEven(int[][] nums, int x, int y){
-        int res = 0;
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if((i+j)%2 != 0 && nums[i][j] != nums[x][y]){
-                    res += 1;
-                }
-            }
-        }
-        return res;
-    }
 
-    public static int solve(int[][] nums){
-        int res = n*m;
-        int size = n*m;
-        if(!blackWhite(nums)){
-            for(int i  = 0; i < size; i+=2){
-                int x1 = i / m;
-                int y1 = i % m;
-                for(int j = 1; j < size; j+=2){
-                    int x2 = j / m;
-                    int y2 = j % m;
-                    System.out.println("("+x1 + "," + y1 + ")->"+"("+x2 + "," + y2 + ")");
-                    if(nums[x1][y1] != nums[x2][y2]){
-                        res = Math.min(res, solveOld(nums, x1, y1)+solveEven(nums, x2, y2));
-                    }else{
-                        int temp = nums[x2][y2];
-                        nums[x2][y2] = nums[x1][y1]+1;
-                        res = Math.min(res, solveOld(nums, x1, y1)+solveEven(nums, x2, y2)+1);
-                        nums[x2][y2] = temp;
-                    }
-
-                }
-            }
-        }
-        return res;
-    }
-
-    public void sodifferent(){
-        Scanner cin = new Scanner(System.in);
-        cin.nextLine();
-        while(cin.hasNextInt())
-        {
-            int res = 0;
-            n = cin.nextInt();
-            m = cin.nextInt();
-            int[][] nums = new int[n][m];
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    nums[i][j] = cin.nextInt();
-                }
-            }
-            System.out.println(solve(nums));
-        }
-    }
-
-    public static void main(String[] args){
         LeetCodeString leetCodeString = new LeetCodeString();
-        int[] res = leetCodeString.findRedundantDirectedConnection(new int[][]{{4,2},{1,5},{5,2},{5,3},{2,4}});
-        LeetCodeArray leetCodeArray = new LeetCodeArray();
-        System.out.println(leetCodeArray.maxProfit(2,new int[]{3,3,5,0,0,3,1,4}));
+        System.out.println(leetCodeString.buildString("2[m2[t]2[n]]"));
+
+    }
+
+    public void test(){
+        while (true){
+
+            for(int i = 0; i < 10; i++){
+                System.out.println("加进去" + i);
+                vector.add(i);
+            }
+
+            Thread removeThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (vector){
+                        System.out.println("*delete begin:" + vector.size());
+                        for(int i = 0; i < vector.size(); i++){
+                            System.out.println("delete->" + i);
+                            vector.remove(i);
+                        }
+                        System.out.println("*delete end:" + vector.size());
+                    }
+                }
+            });
+
+            Thread printThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized(vector){
+                        for(int i = 0; i < vector.size(); i++){
+                            System.out.println(vector.get(i));
+                        }
+                    }
+                }
+            });
+
+            removeThread.start();
+            printThread.start();
+            while (Thread.activeCount()>20);
+
+        }
+
     }
 }
