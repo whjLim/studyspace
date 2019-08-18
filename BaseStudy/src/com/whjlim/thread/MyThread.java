@@ -1,5 +1,8 @@
 package com.whjlim.thread;
 
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -51,9 +54,13 @@ public class MyThread {
         testThreadPool.testThreadPool();
     }
 
+
+
     public static void main(String[] args) {
-       MyThread myThread = new MyThread();
-       myThread.createThreadTest();
-       System.out.println("线程池在干啥");
+        // private static final sun.misc.Unsafe U;
+        //sun.misc.Unsafe U = sun.misc.Unsafe.getUnsafe();
+       // U.compareAndSwapInt("String",6,1,1);
+        System.out.println(Runtime.getRuntime().availableProcessors());
+
     }
 }
