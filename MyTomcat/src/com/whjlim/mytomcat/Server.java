@@ -48,6 +48,7 @@ public class Server {
                 }else{
 
                 }
+                //socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

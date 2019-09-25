@@ -16,11 +16,11 @@ public class Request {
         int len = is.read(buff);
         if (len > 0){
             String msg = new String(buff,0,len);
-            System.out.println(msg);
+            //System.out.println(msg);
 
             //拿到请求资源路径
             uri = msg.substring(msg.indexOf("/"), msg.indexOf("HTTP/1.1")-1);
-            System.out.println("===" + uri + "===");
+            //System.out.println("===" + uri + "===");
         }else{
             System.out.println("null");
         }

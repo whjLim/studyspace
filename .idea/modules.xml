@@ -5,7 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/BaseStudy/BaseStudy.iml" filepath="$PROJECT_DIR$/BaseStudy/BaseStudy.iml" />
       <module fileurl="file://$PROJECT_DIR$/LeetCode/LeetCode.iml" filepath="$PROJECT_DIR$/LeetCode/LeetCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyTomcat/MyTomcat.iml" filepath="$PROJECT_DIR$/MyTomcat/MyTomcat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examination/examination.iml" filepath="$PROJECT_DIR$/examination/examination.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myspring/myspring.iml" filepath="$PROJECT_DIR$/myspring/myspring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-framework-master/spring-framework.iml" filepath="$PROJECT_DIR$/spring-framework-master/spring-framework.iml" />
       <module fileurl="file://$PROJECT_DIR$/springbootssm/springbootssm.iml" filepath="$PROJECT_DIR$/springbootssm/springbootssm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springstu/springstu.iml" filepath="$PROJECT_DIR$/springstu/springstu.iml" />
     </modules>
   </component>
 </project>

@@ -1,8 +1,5 @@
 package com.whjlim.thread;
 
-import sun.misc.Unsafe;
-
-import java.lang.reflect.Field;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,6 +9,8 @@ import java.util.concurrent.Executors;
  * 创建线程的方式
  */
 public class MyThread {
+
+    private int nums;
 
     class TestThread extends Thread{
         @Override
@@ -26,6 +25,8 @@ public class MyThread {
             System.out.println("通过实现 Runnable 接口创建线程");
         }
     }
+
+
 
     class TestThreadPool{
         public void testThreadPool(){
@@ -60,7 +61,8 @@ public class MyThread {
         // private static final sun.misc.Unsafe U;
         //sun.misc.Unsafe U = sun.misc.Unsafe.getUnsafe();
        // U.compareAndSwapInt("String",6,1,1);
-        System.out.println(Runtime.getRuntime().availableProcessors());
+        //System.out.println(Runtime.getRuntime().availableProcessors());
 
     }
 }
+

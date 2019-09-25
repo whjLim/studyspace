@@ -1,7 +1,6 @@
 package com.whjlim.mytomcat;
 
 
-import javax.imageio.stream.FileImageInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
